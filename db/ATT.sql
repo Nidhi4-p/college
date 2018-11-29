@@ -135,3 +135,70 @@ Values
 (5,'HS210',4,1,'2018-11-28'),
 (6,'HS210',4,1,'2018-11-28'),
 (7,'HS210',4,1,'2018-11-28');
+
+
+
+
+----------------------------------------------------------------------------------------------------------
+create or replace function att(regno int)
+returns table (name varchar,course_id varchar,tot_hr int,hr_present int)as
+$$
+begin
+return query
+select s.name,a.course_id,count(a.hr),sum(a.hr_present)
+ from attendance as a  inner join student as s on a.reg_no=s.reg_no
+ where a.reg_no=regno
+ group by s.name,a.course_id;
+end;
+$$
+language plpgsql;
+
+--------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------
+create or replace function att_per(reg int,id varchar)
+returns int as 
+$$
+declare
+	p  int;
+	t  int;
+	per  int;
+begin 
+	select sum(hr_present) into p
+	from attendance
+	where reg_no=reg and course_id=id;
+
+	select count(hr) into t
+	from attendance
+	where reg_no=reg and course_id=id;
+
+	per=(p/t)*100;
+	return per;
+end;
+$$
+language plpgsql;
+--------------------------------------------------------------------------------
+create or replace function att_per(reg int,id varchar)
+returns table (st_name varchar,sub_id varchar,percentage int) as 
+$$
+declare
+	p  int;
+	t  int;
+	per  int;
+begin 
+	select sum(hr_present) into p
+	from attendance
+	where reg_no=reg and course_id=id;
+
+	select count(hr) into t
+	from attendance
+	where reg_no=reg and course_id=id;
+
+	per=(p/t)*100;
+
+	return query select distinct s.name,a.course_id,percent as 'per'
+			from attendance as a ,student as s
+			where a.reg_no=reg and a.course_id=id and a.reg_no=s.reg_no; 
+end;
+$$
+language plpgsql;
