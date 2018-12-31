@@ -1,0 +1,175 @@
+• vi is a text editor used to edit files in Unix.
+• vi is generally considered the de facto standard in Unix editors because:
+1) It's usually available on all the flavors of Unix system.
+2) Its implementations are very similar across the board.
+3) It requires very few resources.
+4) It is more user-friendly than other editors such as the ed or the ex.
+• vi editor can be used
+→ to edit an existing file
+→ to create a new file from scratch and
+→ to read a text file.
+------------------------------------------------------------------------------------------------------------------------------
+
+Syntax for opening vi editor:
+vi filename
+
+ Moving within a file
+
+You need to be in the command mode to move within a file. The default keys for navigation are mentioned below else; You can also use the arrow keys on the keyboard.
+Keystroke 	Use
+k 	Move cursor up
+j 	Move cursor down
+h 	Move cursor left
+l 	Move cursor right
+
+------------------------------------------------------------------------------------------------------------------------------
+Operation Modes
+=======================
+• vi editor can be used in following 3 modes:
+1) Command-Mode
+===============
+ By default, the file will be opened in a command-mode.
+ In this mode, whatever you type is interpreted as a command.
+2) Insert Mode
+==============
+ To enter text into the file, you must be in the insert mode.
+ To switch from command-mode to insert mode, press the key "i".
+ In this mode, whatever you type is interpreted as input and placed in the file.
+ To switch from insert mode to command-mode, press the key "Esc".
+3) Execute Mode (Last Line Mode)
+================================
+ To save the entered text, you must switch to the execute mode.
+ In this mode, whatever you type is interpreted as a ex-command.
+ To switch from command-mode to execute mode, press the keys ":".
+ After inserting ex command, press [Enter] to execute the command.
+ To switch from execute mode to command-mode, press the key "[Enter]".
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+1) Command-Mode
+
+================
+
+command :Function
+================
+1. x:to delete a text command
+2. dd:to delete entire line
+3. P or p:to put the character
+4. y:to yank the text
+5. yy:to copy entire line
+6. u:to undo the recent actions
+
+2) Insert Mode
+
+================
+
+command :function
+================
+1. i:inserts text
+2. a:appends text
+3. I:inserts at beginning of line
+4. A:appends text at end of line
+5. o:opens line below
+6. O:opens line above
+7. r:replaces a single character
+8. s:replaces with a text
+9. S:replaces entire line
+
+3) Excecute Mode
+
+================
+
+command :function
+================
+
+1. :W:saves file and remains in editing mode
+2. :x:saves and quits editing mode
+3. :wq:saves and quits editing mode
+4. :w <filename>:save as
+5. :w! <filename>:save as, but overwrites existing file
+6. :q:quits editing mode
+7. :q!:quits editing mode by rejecting changes made
+8. :sh:escapes to UNIX shell
+9. :recover:recovers file from a crash
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+Repeat factor
+============
+
+> used as a command prefix to repeat the command as many times as the prefix.
+• For example:
+In command-mode,
+→ k moves the cursor one line up.
+→ 10k moves cursor 10 lines up. Here, 10 is acting as a repeat factor.
+------------------------------------------------------------------------------------------------------------------------------
+
+word navigation
+===============
+• There are 3 word navigation commands: 
+
+Command:Function
+----------------
+1. b:moves back to beginning of word
+2. e:moves forward to end of word
+3. w:moves forward to beginning word
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Moving to Line Extremes
+=======================
+
+• Moving to the beginning or end of a line is a common requirement.
+• This can be done by 3 commands: 0, | and $.
+
+Command:Function
+----------------
+
+1. 0 or | :moves cursor to the first character of a line
+2. $      :moves to the end of the current line
+3. 30|    : moves cursor to column 30
+• The use of these commands along with b, e, and w is allowed
+
+------------------------------------------------------------------------------------------------------------------------------
+
+
+How to do the following activities using vi editor.
+1. Text replacement
+2. Delete text
+
+ Deleting (or Cutting) Characters, Words, and Lines
+
+    To delete a character, first place your cursor on that character. Then, you may use any of the following commands:
+
+
+    x	deletes the character under the cursor.
+    X	deletes the character to the left of your cursor.
+    dw	deletes from the character selected to the end of the word.
+    dd	deletes all the current line.
+    D	deletes from the current character to the end of the line.
+
+    Preceding the command with a number will delete multiple characters. 
+    For example, 10x will delete the character selected and the next 9 characters; 
+    10X will delete the 10 characters to the left of the currently selected character. 
+    The command 5dw will delete 5 words, while 4dd deletes four lines.
+    
+    
+  Replacing or Changing Characters, Words, and Lines
+
+    When you are using the following commands to replace text, 
+    you will be put temporarily into insert mode so that you can change a character, word, line, or paragraph of text.
+
+
+    r	replaces the current character with the next character you enter/type.
+       	Once you enter the character you are returned to command mode.
+    R	puts you in overtype mode until you hit ESC which will then return
+       	you to command mode.
+    cw	changes and replaces the current word with text that you type.  A dollar
+       	sign marks the end of the text you're changing.  Pressing ESC when you
+       	finish will return you to command mode.
+
+
+
+
+
