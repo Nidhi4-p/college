@@ -1,0 +1,93 @@
+syllabus
+========
+Concepts of process in Unix – process creation – process
+status – Background and foreground Jobs – Job Execution with
+low priority – Signals – Termination of process – Job control
+TCP/IP Networking tools – talk, mesg, finger, telnet, rlogin, ftp, rcp,
+rsh – security for the Berkeley r-Utilities.
+
+------------------------------------------------------------------------------------------------------------------------------
+
+• A process is a program in execution.
+• The process is said to be born when the program starts execution.
+• The process remains alive as long as the program is active.
+• The process is said to be dead when the program completes execution.
+• Usually, the name of the process is same as the name of the program being executed.
+For ex: A process named grep is created when grep command is being executed.
+• The kernel is responsible for management of process.
+• Kernel determines the priorities for processes so that multiple processes can share CPU resources.
+• The processes have attributes:-
+
+1) The Process-Id (PID)
+ PID is a unique integer used to identify each process uniquely.
+ PID is allocated by the kernel when the process is born.
+ PID can be used to control a process.
+2) The Parent PID (PPID)
+ The PID of the parent is available as a process attribute.
+ 
+A process in a Unix system is created by fork system call. Every process except process 0 is created. 
+The process that invokes the fork system call is parent process and the newly created process is the child process. 
+
+Every process has one parent process but a parent can have many child process. 
+The kernel identifies it process by its process identification number (PID).
+Process 0 is a special process created "by hand" when the system boots.
+
+There are 3 distinct phase in mechanism of process creation and uses 3 system calls: fork(), exec() and wait(). 
+
+
+fork(): Creates a child process. A new process is created because an existing process creates an exact copy of itself. 
+This child process has the same environment as its parent but only the PID is different. This procedure is known as forking. 
+
+exec(): After forking the process, the address space of the child process is overwritten by the new process data. 
+This is done through exec call to the system. No new process is created over here. The PID & PPID remains unchanged. 
+
+wait(): The parent then executes wait system call to wait for the child process to complete its execution. 
+
+The important attributes that are inherited by the child process from its parents are: 
+Real UID and GID, PGID, Nice value, Environment setting, Current working directory, memory segments etc. 
+
+ When the process dies it immediately moves to the zombie state and remains in that state until the parent picks it up to exit status. 
+ A zombie is the harmless dead child. 
+
+When a child dies kernel send SIGCHLD signal to parent for information. 
+It is also possible for the parent to die before child dies. 
+The child then becomes an orphan process and kernel makes 'init' parent of all the orphans. 
+When this adopted child dies 'init' picks up it to exit status
+
+--------------------------------------------------------------------------------------------------------------------------------------
+Starting a Process
+-------------------
+When you start a process (run a command), there are two ways you can run it −
+ Foreground Processes
+ Background Processes
+
+Foreground Processes
+====================
+By default, every process that you start runs in the foreground. It gets its input from the
+keyboard and sends its output to the screen.
+
+for eg:
+ls command is performed.The process runs in the foreground, the output is directed to my screen, and if the ls
+command wants any input (which it does not), it waits for it from the keyboard.
+
+While a program is running in the foreground and is time-consuming, no other commands
+can be run (start any other processes) because the prompt would not be available until
+the program finishes processing and comes out.
+
+Background Processes
+====================
+A background process runs without being connected to your keyboard. If the background
+process requires any keyboard input, it waits.
+The advantage of running a process in the background is that you can run other
+commands; you do not have to wait until it completes to start another!
+
+The simplest way to start a background process is to add an ampersand (&) at the end of
+the command.
+eg:
+$ls ch*.doc &
+
+
+
+
+
+
