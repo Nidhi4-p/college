@@ -86,7 +86,234 @@ the command.
 eg:
 $ls ch*.doc &
 
+-------------------------------------------------------------------------------------------------------------------------------
+Listing Running Processes
+=========================
 
+use PS command ---> process status. (f-a-x-u-e)
+
+nidhi@nidhi-HP-Notebook-15-Laptop-PC:~$ ps
+  PID TTY          TIME CMD
+ 3549 pts/4    00:00:00 bash
+ 4578 pts/4    00:00:00 ps
+
+
+-->-f ( f for full) option, which provides more information
+nidhi@nidhi-HP-Notebook-15-Laptop-PC:~$ ps -f
+UID        PID  PPID  C STIME TTY          TIME CMD
+nidhi     3549  3543  0 Jan01 pts/4    00:00:00 bash
+nidhi     4848  3549  0 07:01 pts/4    00:00:00 ps -f
+
+options:-
+
+Option Description
+-a Shows information about all users
+-x Shows information about processes without terminals
+-u Shows additional information like -f option
+-e Displays extended information
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Zombie and Orphan Processes
+===========================
+Normally, when a child process is killed, the parent process is updated via a SIGCHLD
+signal. Then the parent can do some other task or restart a new child as needed. However,
+sometimes the parent process is killed before its child is killed. In this case, the "parent of
+all processes," the init process, becomes the new PPID (parent process ID). In some
+cases, these processes are called orphan processes.
+
+When a process is killed, a ps listing may still show the process with a Z state. This is a
+zombie or defunct process. The process is dead and not being used. These processes are
+different from the orphan processes. They have completed execution but still find an entry
+in the process table.
+------------------------------------------------------------------------------------------------------------------------------
+
+The top Command
+---------------
+The top command is a very useful tool for quickly showing processes sorted by various
+criteria.
+It is an interactive diagnostic tool that updates frequently and shows information about
+physical and virtual memory, CPU usage, load averages, and your busy processes.
+Here is the simple syntax to run top command and to see the statistics of CPU utilization
+by different processes −
+
+syntax:  $top
+
+--------------------------------------------------------------------------------------------------------------------------------
+Running jobs at low priority
+============================
+
+A specific UNIX command that lets you run your background jobs (See section Running jobs in the background)
+at low priority is the nice command. 
+It helps prevent compute-bound applications from slowing down interactive use of the computer. This includes your own interactive use in the foreground. nice accepts priority numbers from 1 to 20, where higher numbers mean lower priority. For example, to execute a program called number-cruncher at low priority in the background, you could type nice +20 number-cruncher &
+
+Enter the nice command this way when you're in the C shell. 
+When you're in the Bourne shell, enter it the same way except replace the plus (+) before the 20 with a minus (-). 
+Note that there are 4 different forms of nice. 
+
+To see the nice values of processes, we can use utilities such as ps, top or htop.
+
+To view processes nice value with ps command in user-defined format (here the NI column shows niceness of processes).
+
+$ ps -eo pid,ppid,ni,comm
+
+
+PR AND PRI
+----------
+    NI – is the nice value, which is a user-space concept, while
+    PR or PRI – is the process’s actual priority, as seen by the Linux kernel. (In top and htop command respectively)
+    
+How To Calculate PR or PRI Values
+=================================
+
+Total number of priorities = 140
+Real time priority range(PR or PRI):  0 to 99 
+User space priority range: 100 to 139
+
+Nice value range (NI): -20 to 19
+
+PR = 20 + NI
+PR = 20 + (-20 to + 19)
+PR = 20 + -20  to 20 + 19
+PR = 0 to 39 which is same as 100 to 139.
+
+if PR = rt -----> real time scheduling priority 
+-----------------------------------------------------------------------------------------------------------------------------
+How to Run A Command with a Given Nice Value in Linux ??
+--------------------------------------------------------
+
+sudo nice -n -20 su -c command_to_run user_to_run_as
+
+
+Change the Scheduling Priority of a Process in Linux
+----------------------------------------------------
+
+nidhi@nidhi-HP-Notebook-15-Laptop-PC:~$ sudo renice -n  -12  -p 5886
+5886 (process ID) old priority 0, new priority -12
+
+note: Any changes you make with renice command to a user’s processes nice values are only 
+      applicable until the next reboot.
+      
+ -----> therefore Set Default Nice Value Of a Specific User’s Processes
+        syntax :  <username>  <hard|soft>  priority  <nice value>
+        
+--------------------------------------------------------------------------------------------------------------------------------
+
+TERMINATION OF PROCESS
+======================
+
+Linux Operating System comes with Kill command to terminate a process.
+
+For a kill command a Signal Name could be:
+
+Signal Name		Signal Value			Behaviour
+
+SIGHUP			      1				Hangup
+SIGKILL			     9				Kill Signal
+SIGTERM			     15			Terminate
+
+
+SIGTERM is the default and safest way to kill a process. 
+SIGHUP is less secure way of killing a process as SIGTERM. 
+SIGKILL is the most unsafe way among the above three, to kill a process which terminates a process without saving
+
+In order to kill a process, we need to know the Process ID of a process. A Process is an instance of a program. Every-time a program starts, automatically an unique PID is generated for that process. 
+Every Process in Linux, have a pid. 
+The first process that starts when Linux System is booted is – init process, hence it is assigned a 
+value of ‘1‘ in most of the cases.
+
+Init is the master process and can not be killed this way, which insures that the master process don’t gets killed accidentally. Init decides and allows itself to be killed, where kill is merely a request for a shutdown.
+
+
+eg:
+
+kill -9 3139
+kill -SIGTERM 3139
+
+
+pkill
+-----
+
+killing a process using process name
+syntax: pkill <process-name>
+
+killall
+-------
+
+if a process have too many instances and a number of child processes, we have a command ‘killall‘.
+syntax: killall [signal or option] Process Name 
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+TCP/IP NETWORKING TOOLS
+========================
+
+1.talk
+  ----
+Talk is a visual communication program which copies lines from your terminal to that of another user,
+much like an instant messenger service. When first called, talk contacts the talk daemon on the other user's machine, 
+which sends the message below.
+
+Message from TalkDaemon@his_machine...
+talk: connection requested by your_name@your_machine.
+talk: respond with: talk your_name@your_machine
+
+to that user. At this point, he then replies by typing
+
+talk your_name@your_machine 
+
+Typing control-L (^L) will cause the screen to be reprinted. The erase, kill line, and word erase characters 
+(normally ^H, ^U, and ^W, respectively) will behave normally. To exit, just type the interrupt character (normally ^C); 
+
+syntax:
+------
+talk person [ttyname]
+
+Options
+
+person
+------
+If you want to talk to someone on your machine, then person is just the person's login name. 
+If you want to talk to a user on another host, then person is of the form 'user@host'.
+
+ttyname
+-------
+If you want to talk to a user who is logged in more than once, the ttyname argument may
+be used to indicate the appropriate terminal name, where ttyname is of the form 'ttyXX' or 'pts/X.
+
+2.mesg
+  ----
+  
+ The mesg command allows you control write access to your terminal by other users.
+  
+ The write command allows other users to send a message to your terminal session; 
+ the mesg command is used to toggle these messages on or off.
+ 
+mesg syntax
+----------
+
+mesg [n|y]
+
+Options
+-------
+n 	Prevents the display of terminal messages from other users. This option is like using a "do not disturb" sign.
+y 	Allows messages to be displayed on your screen.
+
+If no option is given, mesg displays the current access state of your terminal
+
+3.finger
+  ------
+  
+  finger command is used to lookup information about an user.
+  
+nidhi@nidhi-HP-Notebook-15-Laptop-PC:~$ finger
+Login     Name       Tty      Idle  Login Time   Office     Office Phone
+nidhi     nidhi      tty7    20:07  Jan  1 13:08 (:0)
+
+4.telnet
+  ------
+  
+  
 
 
 
