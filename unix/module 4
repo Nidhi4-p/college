@@ -310,10 +310,65 @@ nidhi@nidhi-HP-Notebook-15-Laptop-PC:~$ finger
 Login     Name       Tty      Idle  Login Time   Office     Office Phone
 nidhi     nidhi      tty7    20:07  Jan  1 13:08 (:0)
 
-4.telnet
-  ------
+
+ENVIRONMENT VARIABLES
+======================
+
+Each process in Unix has its own set of environment variables. 
+They're called environment variables because the default set of such variables consists mostly of 
+session-wide variables used for configuration purposes.
+
+From the point of a Unix shell though, environment variables can be accessed the same way as any other variable.
+
+    PATH – Display lists directories the shell searches, for the commands.
+    HOME – User’s home directory to store files.
+    TERM – Set terminal emulator being used by UNIX.
+    PS1 – Display shell prompt in the Bourne shell and variants.
+    MAIL – Path to user’s mailbox.
+    TEMP – Path to where processes can store temporary files.
+    JAVA_HOME – Sun (now Oracle) JDK path.
+    ORACLE_HOME – Oracle database installation path.
+    TZ – Timezone settings
+    PWD – Path to the current directory.
+    HISTFILE – The name of the file in which command history is saved
+    HISTFILESIZE -The maximum number of lines contained in the history file
+    HOSTNAME -The system’s host name
+    LD_LIBRARY_PATH -It is a colon-separated set of directories where libraries should be searched for.
+    USER -Current logged in user’s name.
+    DISPLAY -Network name of the X11 display to connect to, if available.
+    SHELL -The current shell.
+    TERMCAP – Database entry of the terminal escape codes to perform various terminal functions.
+    OSTYPE – Type of operating system.
+    MACHTYPE – The CPU architecture that the system is running on.
+    EDITOR – The user’s preferred text editor.
+    PAGER – The user’s preferred text pager.
+    MANPATH – Colon separated list of directories to search for manual pages.
+
+Display Environment Variable
+----------------------------
+
+EG:
+To display search path, enter:
+echo $PATH
+
+To display prompt settings, enter:
+echo $PS1
+
+A few more examples:
+
+echo $USER
+echo $PWD
+echo $MAIL
+echo $JAVA_PATH
+echo $DB2INSTANCE
   
   
+Change or Set Environment Variable
+----------------------------------
+The syntax is as follows:
+
+export var=value
+
 
 
 
