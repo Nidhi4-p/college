@@ -145,7 +145,11 @@ Running jobs at low priority
 
 A specific UNIX command that lets you run your background jobs (See section Running jobs in the background)
 at low priority is the nice command. 
-It helps prevent compute-bound applications from slowing down interactive use of the computer. This includes your own interactive use in the foreground. nice accepts priority numbers from 1 to 20, where higher numbers mean lower priority. For example, to execute a program called number-cruncher at low priority in the background, you could type nice +20 number-cruncher &
+It helps prevent compute-bound applications from slowing down interactive use of the computer. 
+This includes your own interactive use in the foreground. nice accepts priority numbers from 1 to 20, 
+where higher numbers mean lower priority. 
+For example, to execute a program called number-cruncher at low priority in the background, you could type 
+nice +20 number-cruncher &
 
 Enter the nice command this way when you're in the C shell. 
 When you're in the Bourne shell, enter it the same way except replace the plus (+) before the 20 with a minus (-). 
