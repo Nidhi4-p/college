@@ -1,0 +1,343 @@
+registration.html
+
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>REGISTRATION</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>            
+            <form method="post" action="sign">
+            <h1>Sign up</h1>
+            EMPLOYEE ID:<input type="text" name="a0"><br><br>
+            FIRST NAME: <input type="text" name="a1"><br><br>
+            LAST NAME: <input type="text" name="a2"><br><br>
+            AGE:<input type="number" name="a3"><br><br>
+            SALARY:<input type="text" name="a7"><br><br>
+            DEPARTMENT:<input type="text" name="a8"><br><br>
+            USERNAME:<input type="text" name="a4"><br><br>
+            PASSWORD: <input type="password" name="a5"><br><br>
+            EMAIL:<input type="email" name="a6"><br><br>
+            <input type="submit" value="Sign in">  
+        </form></div>
+    </body>
+</html>
+
+
+sign.java
+
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ *
+ * @author HP
+ */
+@WebServlet(urlPatterns = {"/sign"})
+public class sign extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ReistrationServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ReistrationServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Connection connection;
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "root";
+        String a0=request.getParameter("a0");
+        String a1=request.getParameter("a1");
+        String a2=request.getParameter("a2");
+        String a3=request.getParameter("a3");
+        String a4=request.getParameter("a4");
+        String a5=request.getParameter("a5");
+        String a6=request.getParameter("a6");
+        String a7=request.getParameter("a7");
+        String a8=request.getParameter("a8");
+        PrintWriter out = response.getWriter();
+        try {        
+            Class.forName("org.postgresql.Driver");    
+        } catch(ClassNotFoundException e ){
+              //e.getMessage();
+              out.println(e.getMessage());
+        }    
+        try {
+                connection = DriverManager.getConnection(url, user, password);
+                out.println("Connected");
+                Statement stmt = connection.createStatement();                
+                int i = stmt.executeUpdate("INSERT INTO empsignup(emp_id,first,last,username,password,age,salary,department,email) VALUES ('" +a0+"','" +a1+"','"+ a2+"','" +a4+"','" +a5+"','"+ a3+"','" + a7 +"','" + a8 +"','" + a6 +"');");
+                out.println(i);
+                connection.close();
+        } catch (SQLException ex) {
+        out.println(ex.getMessage());        
+        }
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}
+
+
+login.html
+
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div> <form method="post" action="update.html">
+            <h1>LOGIN</h1>
+            USERNAME: <input type="text" name="u1"><br><br>
+            PASSWORD: <input type="password" name="u2"><br><br>
+            <input type="submit" value="Login in">  
+        </form> </div>
+    </body>
+</html>
+
+
+update.html
+------------
+
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>updation</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <form method="post" action="update">
+            <h1>UPDATE INFORMATION</h1>
+            EMPLOYEE ID: <input type="text" name="a0"><br><br>
+            FIRST NAME: <input type="text" name="a1"><br><br>
+            LAST NAME: <input type="text" name="a2"><br><br>
+            AGE:<input type="number" name="a3"><br><br>
+            SALARY:<input type="text" name="a7"><br><br>
+            DEPARTMENT:<input type="text" name="a8"><br><br>
+            USERNAME:<input type="text" name="a4"><br><br>
+            PASSWORD: <input type="password" name="a5"><br><br>
+            EMAIL:<input type="email" name="a6"><br><br>
+            <input type="submit" value="UPDATE">  
+        </form>
+        </div>
+    </body>
+</html>
+
+
+
+update.java
+-----------
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ *
+ * @author HP
+ */
+@WebServlet(urlPatterns = {"/update"})
+public class update extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ReistrationServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ReistrationServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Connection connection;
+        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String user = "postgres";
+        String password = "root";
+        String a0=request.getParameter("a0");
+        String a1=request.getParameter("a1");
+        String a2=request.getParameter("a2");
+        String a3=request.getParameter("a3");
+        String a4=request.getParameter("a4");
+        String a5=request.getParameter("a5");
+        String a6=request.getParameter("a6");
+        String a7=request.getParameter("a7");
+        String a8=request.getParameter("a8");
+        PrintWriter out = response.getWriter();
+        try {        
+            Class.forName("org.postgresql.Driver");    
+        } catch(ClassNotFoundException e ){
+              //e.getMessage();
+              out.println(e.getMessage());
+        }    
+        try {
+                connection = DriverManager.getConnection(url, user, password);
+                out.println("Connected");
+                Statement stmt = connection.createStatement();                
+                int i = stmt.executeUpdate("UPDATE empsignup SET first=a1,last=a2,age=a3,salary=a7,department=a8,email=a6 WHERE emp_id=a0");
+                out.println(i);
+                connection.close();
+        } catch (SQLException ex) {
+        out.println(ex.getMessage());        
+        }
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+}
+
