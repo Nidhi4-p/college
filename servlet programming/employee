@@ -321,7 +321,7 @@ public class update extends HttpServlet {
                 connection = DriverManager.getConnection(url, user, password);
                 out.println("Connected");
                 Statement stmt = connection.createStatement();                
-                int i = stmt.executeUpdate("UPDATE empsignup SET first=a1,last=a2,age=a3,salary=a7,department=a8,email=a6 WHERE emp_id=a0");
+                int i = stmt.executeUpdate("UPDATE empsignup SET first='"+a1+"',last='"+a2+"',age='"+a3+"',salary='"+a7+"',department='"+a8+"',email='"+a6+"' WHERE emp_id='"+a0+"'");
                 out.println(i);
                 connection.close();
         } catch (SQLException ex) {
