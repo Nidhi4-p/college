@@ -489,30 +489,7 @@ public class update extends HttpServlet {
 
 }
 
-ADMIN LOGIN
------------
 
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>amin login</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div><form method="post" action="empupdate.html">
-            <h1>LOGIN</h1>
-            USERNAME: <input type="text" name="u1"><br><br>
-            PASSWORD: <input type="password" name="u2"><br><br>
-            <input type="submit" value="Login in">  
-        </form> </div>
-    </body>
-</html>
 
 ADMIN CONTROL --> empupdate.html (for adding and deleting employee)
 ================================
